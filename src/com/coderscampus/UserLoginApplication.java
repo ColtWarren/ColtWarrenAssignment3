@@ -1,3 +1,4 @@
+package com.coderscampus;
 import java.io.IOException;
 import java.util.Scanner;
 
