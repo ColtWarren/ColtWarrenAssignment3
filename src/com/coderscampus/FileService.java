@@ -4,17 +4,23 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class FileService {
-    public String[] readUserData(String filePath) throws IOException {
+
+    public String[] read(String filePath)  {
         int lineCount = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            while (br.readLine() != null) lineCount++;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+            while (bufferedReader.readLine() != null) lineCount++;
+        } catch (IOException e) {
+            System.out.println("There was an error counting lines in " + filePath + " : " + e.getMessage());
         }
 
         String[] lines = new String[lineCount];
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
             for (int i = 0; i < lineCount; i++) {
-                lines[i] = br.readLine();
+                lines[i] = bufferedReader.readLine();
             }
+        } catch (IOException e) {
+            System.out.println("There was an error reading lines in " + filePath + " : " + e.getMessage());
+            throw new RuntimeException(e);
         }
         return lines;
     }

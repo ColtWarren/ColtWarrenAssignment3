@@ -2,12 +2,16 @@ package com.coderscampus;
 public class UserService {
     private User[] users;
 
-    public void initializeUsers(String[] userInput) {
-        users = new User[userInput.length];
-        for (int i = 0; i < userInput.length; i++) {
-            String[] parts = userInput[i].split(",");
+    public void initializeUsers(String fileName) {
+        FileService fileService = new FileService();
+        String[] rows = fileService.read(fileName);
+        int numberOfUsers = rows.length;
+        users = new User[numberOfUsers];
+        int index = 0;
+        for (String row : rows) {
+            String[] parts = row.split(",");
             if (parts.length == 3) {
-                users[i] = new User(parts[0], parts[1], parts[2]);
+                users[index++] = new User(parts[0], parts[1], parts[2]);
             }
         }
     }
